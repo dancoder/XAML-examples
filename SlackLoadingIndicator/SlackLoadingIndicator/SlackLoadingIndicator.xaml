@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="SlackLoader.SlackLoadingIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="36" d:DesignWidth="36">
+
+    <UserControl.Resources>
+
+        <Storyboard x:Key="LineAnimationStoryboard"
+                    RepeatBehavior="Forever">
+
+            <!-- Orange line -->
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="X1"
+                             From="20" To="25"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="X2"
+                             From="20" To="25"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="Y1"
+                             From="0" To="28"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="Y2"
+                             From="0" To="28"
+                             Duration="0:0:0.55"/>
+
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="X1"
+                             From="25" To="20"
+                             BeginTime="0:0:0.7"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="Y1"
+                             From="28" To="0"
+                             BeginTime="0:0:0.7"
+                             Duration="0:0:0.55"/>
+
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="X2"
+                             From="25" To="20"
+                             BeginTime="0:0:1.4"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="Y2"
+                             From="28" To="0"
+                             BeginTime="0:0:1.4"
+                             Duration="0:0:0.55"/>
+            <!-- End orange line -->
+
+            <!-- Blue line -->
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="X1"
+                             From="0" To="28"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="X2"
+                             From="0" To="28"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="Y1"
+                             From="10" To="5"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="Y2"
+                             From="10" To="5"
+                             Duration="0:0:0.55"/>
+
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="X1"
+                             From="28" To="0"
+                             BeginTime="0:0:0.7"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="Y1"
+                             From="5" To="10"
+                             BeginTime="0:0:0.7"
+                             Duration="0:0:0.55"/>
+
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="X2"
+                             From="28" To="0"
+                             BeginTime="0:0:1.4"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="Y2"
+                             From="5" To="10"
+                             BeginTime="0:0:1.4"
+                             Duration="0:0:0.55"/>
+            <!-- End blue line -->
+
+            <!-- Red line -->
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="X1"
+                             From="30" To="2"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="X2"
+                             From="30" To="2"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="Y1"
+                             From="20" To="25"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="Y2"
+                             From="20" To="25"
+                             Duration="0:0:0.55"/>
+
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="X1"
+                             From="2" To="30"
+                             BeginTime="0:0:0.7"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="Y1"
+                             From="25" To="20"
+                             BeginTime="0:0:0.7"
+                             Duration="0:0:0.55"/>
+
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="X2"
+                             From="2" To="30"
+                             BeginTime="0:0:1.4"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="Y2"
+                             From="25" To="20"
+                             BeginTime="0:0:1.4"
+                             Duration="0:0:0.55"/>
+            <!-- End red line -->
+
+            <!-- Green line -->
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="X1"
+                             From="10" To="5"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="X2"
+                             From="10" To="5"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="Y1"
+                             From="30" To="2"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="Y2"
+                             From="30" To="2"
+                             Duration="0:0:0.55"/>
+
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="X1"
+                             From="5" To="10"
+                             BeginTime="0:0:0.7"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="Y1"
+                             From="2" To="30"
+                             BeginTime="0:0:0.7"
+                             Duration="0:0:0.55"/>
+
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="X2"
+                             From="5" To="10"
+                             BeginTime="0:0:1.4"
+                             Duration="0:0:0.55"/>
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="Y2"
+                             From="2" To="30"
+                             BeginTime="0:0:1.4"
+                             Duration="0:0:0.55"/>
+            <!-- End green line -->
+
+        </Storyboard>
+
+    </UserControl.Resources>
+
+    <Canvas Width="30" Height="30">
+
+        <Canvas.RenderTransform>
+            <RotateTransform CenterX="15" CenterY="15"
+                             Angle="-9"/>
+        </Canvas.RenderTransform>
+
+        <Line x:Name="OrangeLine"
+              X1="20" Y1="0"
+              X2="20" Y2="0"
+              Stroke="#A0E9A920" StrokeThickness="7" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+        <Line x:Name="BlueLine"
+              X1="0" Y1="10"
+              X2="0" Y2="10"
+              Stroke="#A06FCADC" StrokeThickness="7" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+        <Line x:Name="RedLine"
+              X1="30" Y1="20"
+              X2="30" Y2="20"
+              Stroke="#A0E11462" StrokeThickness="7" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+        <Line x:Name="GreenLine"
+              X1="10" Y1="30"
+              X2="10" Y2="30"
+              Stroke="#A03DB88F" StrokeThickness="7" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+    </Canvas>
+
+</UserControl>
