@@ -1,0 +1,779 @@
+﻿<Window x:Class="Wizard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+        Title="Wizard style TabControl"
+        Height="700" Width="1100"
+        Background="#F2F2F2">
+
+    <Window.Resources>
+
+        <SolidColorBrush x:Key="TabItem.Static.Background" Color="#E0E0E0"/>
+        <SolidColorBrush x:Key="TabItem.Static.Border" Color="#E0E0E0"/>
+        <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="#FF0099CC"/>
+        <SolidColorBrush x:Key="TabItem.MouseOver.Background" Color="#FF0099CC"/>
+        <SolidColorBrush x:Key="TabItem.Disabled.Background" Color="#F0F0F0"/>
+        <SolidColorBrush x:Key="TabItem.Disabled.Border" Color="#D9D9D9"/>
+        <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#ACACAC"/>
+        <SolidColorBrush x:Key="TabItem.Header.Selected.Background" Color="#00779F"/>
+
+        <Style x:Key="WizardFirstTabItemStyle" TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="#989898"/>
+            <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="6,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+
+                        <Grid x:Name="templateRoot"
+                              SnapsToDevicePixels="true">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Border x:Name="topRail"
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0"
+                                    Background="{TemplateBinding Background}"
+                                    Width="4"
+                                    Margin="0,0,0,-5"/>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border x:Name="leftRail"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1"
+                                        Background="{TemplateBinding Background}"
+                                        Height="4"
+                                        Margin="0,0,-5,0"/>
+
+                                <Border x:Name="rightRail"
+                                        Grid.Column="2"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1"
+                                        Background="{TemplateBinding Background}"
+                                        Height="4"
+                                        Margin="-5,0,0,0"/>
+
+                                <Ellipse x:Name="mainBorder"
+                                         Grid.Column="1"
+                                         Stroke="{TemplateBinding BorderBrush}"
+                                         Fill="{TemplateBinding Background}"
+                                         Width="26" Height="26"
+                                         SnapsToDevicePixels="True"/>
+
+                            </Grid>
+
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Grid.Row="2"
+                                              ContentSource="Header"
+                                              Focusable="False"
+                                              HorizontalAlignment="Center" VerticalAlignment="Top"
+                                              Margin="3,6,3,4"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                            <Border x:Name="bottomRail"
+                                    Grid.Row="3"
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0"
+                                    Background="{TemplateBinding Background}"
+                                    Width="4"
+                                    Margin="0"/>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top">
+                                <Setter Property="Visibility" TargetName="leftRail" Value="Hidden"/>
+                                <Setter Property="Visibility" TargetName="topRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="bottomRail" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom">
+                                <Setter Property="Visibility" TargetName="leftRail" Value="Hidden"/>
+                                <Setter Property="Visibility" TargetName="topRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="bottomRail" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right">
+                                <Setter Property="Visibility" TargetName="topRail" Value="Hidden"/>
+                                <Setter Property="Visibility" TargetName="leftRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="rightRail" Value="Collapsed"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left">
+                                <Setter Property="Visibility" TargetName="topRail" Value="Hidden"/>
+                                <Setter Property="Visibility" TargetName="leftRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="rightRail" Value="Collapsed"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Foreground" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WizardTabItemStyle" TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="#989898"/>
+            <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="6,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+
+                        <Grid x:Name="templateRoot"
+                              SnapsToDevicePixels="true">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Border x:Name="topRail"
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0"
+                                    Background="{TemplateBinding Background}"
+                                    Width="4"
+                                    Margin="0,0,0,-5"/>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border x:Name="leftRail"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1"
+                                        Background="{TemplateBinding Background}"
+                                        Height="4"
+                                        Margin="0,0,-5,0"/>
+
+                                <Border x:Name="rightRail"
+                                        Grid.Column="2"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1"
+                                        Background="{TemplateBinding Background}"
+                                        Height="4"
+                                        Margin="-5,0,0,0"/>
+
+                                <Ellipse x:Name="mainBorder"
+                                         Grid.Column="1"
+                                         Stroke="{TemplateBinding BorderBrush}"
+                                         Fill="{TemplateBinding Background}"
+                                         Width="26" Height="26"
+                                         SnapsToDevicePixels="True"/>
+
+                            </Grid>
+
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Grid.Row="2"
+                                              ContentSource="Header"
+                                              Focusable="False"
+                                              HorizontalAlignment="Center" VerticalAlignment="Top"
+                                              Margin="3,6,3,4"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                            <Border x:Name="bottomRail"
+                                    Grid.Row="3"
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0"
+                                    Background="{TemplateBinding Background}"
+                                    Width="4"
+                                    Margin="0"/>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!--<DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top">
+                                <Setter Property="Visibility" TargetName="topRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="bottomRail" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom">
+                                <Setter Property="Visibility" TargetName="topRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="bottomRail" Value="Collapsed"/>
+                            </DataTrigger>-->
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right">
+                                <Setter Property="Visibility" TargetName="leftRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="rightRail" Value="Collapsed"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left">
+                                <Setter Property="Visibility" TargetName="leftRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="rightRail" Value="Collapsed"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Foreground" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WizardLastTabItemStyle" TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="#989898"/>
+            <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="6,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+
+                        <Grid x:Name="templateRoot"
+                              SnapsToDevicePixels="true">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Border x:Name="topRail"
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0"
+                                    Background="{TemplateBinding Background}"
+                                    Width="4"
+                                    Margin="0,0,0,-5"/>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border x:Name="leftRail"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1"
+                                        Background="{TemplateBinding Background}"
+                                        Height="4"
+                                        Margin="0,0,-5,0"/>
+
+                                <Border x:Name="rightRail"
+                                        Grid.Column="2"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1"
+                                        Background="{TemplateBinding Background}"
+                                        Height="4"
+                                        Margin="-5,0,0,0"/>
+
+                                <Ellipse x:Name="mainBorder"
+                                         Grid.Column="1"
+                                         Stroke="{TemplateBinding BorderBrush}"
+                                         Fill="{TemplateBinding Background}"
+                                         Width="26" Height="26"
+                                         SnapsToDevicePixels="True"/>
+
+                            </Grid>
+
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Grid.Row="2"
+                                              ContentSource="Header"
+                                              Focusable="False"
+                                              HorizontalAlignment="Center" VerticalAlignment="Top"
+                                              Margin="3,6,3,4"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                            <Border x:Name="bottomRail"
+                                    Grid.Row="3"
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0"
+                                    Background="{TemplateBinding Background}"
+                                    Width="4"
+                                    Margin="0"/>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top">
+                                <Setter Property="Visibility" TargetName="rightRail" Value="Hidden"/>
+                                <Setter Property="Visibility" TargetName="topRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="bottomRail" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom">
+                                <Setter Property="Visibility" TargetName="rightRail" Value="Hidden"/>
+                                <Setter Property="Visibility" TargetName="topRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="bottomRail" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right">
+                                <Setter Property="Visibility" TargetName="leftRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="rightRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="bottomRail" Value="Hidden"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left">
+                                <Setter Property="Visibility" TargetName="leftRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="rightRail" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="bottomRail" Value="Hidden"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Foreground" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                                <Setter Property="Fill" TargetName="mainBorder" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                                <Setter Property="Stroke" TargetName="mainBorder" Value="{StaticResource TabItem.Header.Selected.Background}"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WizardTabControlStyle" TargetType="{x:Type TabControl}">
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabItem.Selected.Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+
+                        <Grid x:Name="templateRoot"
+                              ClipToBounds="true"
+                              SnapsToDevicePixels="true"
+                              KeyboardNavigation.TabNavigation="Local">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="ColumnDefinition0"/>
+                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <UniformGrid x:Name="headerPanel"
+                                         Background="Transparent"
+                                         IsItemsHost="true"
+                                         Margin="2,2,2,0"
+                                         KeyboardNavigation.TabIndex="1"
+                                         Panel.ZIndex="1"/>
+
+                            <Border x:Name="contentPanel"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}"
+                                    Grid.Column="0" Grid.Row="1"
+                                    KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+
+                                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                                  ContentSource="SelectedContent"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TabStripPlacement" Value="Top">
+                                <Setter Property="Rows" TargetName="headerPanel" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Bottom">
+                                <Setter Property="Rows" TargetName="headerPanel" Value="1"/>
+                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="1"/>
+                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
+                                <Setter Property="Margin" TargetName="headerPanel" Value="2,0,2,2"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Left">
+                                <Setter Property="Columns" TargetName="headerPanel" Value="1"/>
+                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
+                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="headerPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="contentPanel" Value="1"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                                <Setter Property="Margin" TargetName="headerPanel" Value="2,2,0,2"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Right">
+                                <Setter Property="Columns" TargetName="headerPanel" Value="1"/>
+                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
+                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="headerPanel" Value="1"/>
+                                <Setter Property="Grid.Column" TargetName="contentPanel" Value="0"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
+                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                                <Setter Property="Margin" TargetName="headerPanel" Value="0,2,2,2"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ObjectDataProvider x:Key="DockValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="controls:Dock"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#00779F">
+            <StackPanel Orientation="Horizontal"
+                        Margin="8">
+
+                <Label Foreground="White"
+                       Content="Tab placement: "/>
+
+                <ComboBox x:Name="DockComboBox"
+                          MinWidth="100"
+                          ItemsSource="{Binding Source={StaticResource DockValues}}"
+                          SelectedItem="{x:Static controls:Dock.Top}"/>
+
+            </StackPanel>
+        </Border>
+
+        <TextBlock Grid.Row="1"
+                   Margin="10,10,10,0"
+                   Text="Default TabControl style:"/>
+
+        <TabControl Grid.Row="2"
+                    Margin="10"
+                    TabStripPlacement="{Binding SelectedItem, ElementName=DockComboBox}">
+
+            <TabItem Header="1. CHECKOUT"
+                     TabIndex="0">
+                <Grid>
+                    <TextBlock FontSize="48"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        ITEMS IN BASKET
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="2. BILLING INFO"
+                     TabIndex="1">
+                <Grid>
+                    <TextBlock FontSize="48"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        BILLING INFORMATION
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="3. PAYMENT"
+                     TabIndex="2">
+                <Grid>
+                    <TextBlock FontSize="48"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        PAYMENT DETAILS
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="4. RECEIPT"
+                     TabIndex="4">
+                <Grid>
+                    <TextBlock FontSize="48"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        AWESOME!
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <TextBlock Grid.Row="3"
+                   Margin="10,5,10,0"
+                   Text="Restyled TabControl:"/>
+
+        <TabControl x:Name="CheckoutTabControl"
+                    Grid.Row="4"
+                    BorderThickness="0"
+                    Margin="10"
+                    TabStripPlacement="{Binding SelectedItem, ElementName=DockComboBox}"
+                    Style="{StaticResource WizardTabControlStyle}">
+
+            <TabItem Style="{StaticResource WizardFirstTabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Margin="0,0,5,0">
+                            <Path Data="M17.099982,16.20401L34.266981,16.20401 34.266981,18.89901 17.099982,18.89901z M14.053982,10.75501L36.317982,10.75501 36.317982,13.45001 14.053982,13.45001z M0.67000008,0L6.9869986,1.4330082 7.4139986,2.5930147 7.4130716,2.5935116 14.808873,22.069011 36.276239,22.069011 39.940575,6.0790195 42.666985,6.7039852 38.623377,24.348001 38.533981,24.327541 38.533981,24.86601 15.871031,24.86601 17.193412,28.34826 17.19502,28.348138C17.262076,28.344734 17.329573,28.343012 17.397471,28.343012 18.891221,28.343012 20.191679,29.17667 20.858591,30.403734L20.942261,30.56701 29.598175,30.56701 29.68175,30.403734C30.34793,29.17667 31.647352,28.343012 33.141983,28.343012 35.31599,28.343012 37.077997,30.106785 37.077997,32.279505 37.077997,34.452223 35.31599,36.214996 33.141983,36.214996 31.307664,36.214996 29.767365,34.960052 29.330806,33.262781L29.293941,33.10301 21.246878,33.10301 21.209962,33.262781C20.772813,34.960052 19.23071,36.214996 17.397471,36.214996 15.224743,36.214996 13.461964,34.452223 13.461963,32.279505 13.461964,31.193145 13.902658,30.209022 14.614944,29.496489L14.631997,29.480224 4.8030195,3.5954418 0,2.4010134z"
+                                  Stretch="Uniform"
+                                  Width="16" Height="16"
+                                  Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}}">
+                            </Path>
+                        </Viewbox>
+                        <TextBlock>CHECKOUT</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid>
+                    <TextBlock FontSize="48"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        ITEMS IN BASKET
+                    </TextBlock>
+
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                            HorizontalContentAlignment="Stretch"
+                            Margin="15" Padding="15"
+                            MinWidth="170"
+                            Click="OnClickToBillingInformation">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="BILLING INFORMATION"/>
+                            <Viewbox Grid.Column="1"
+                                     Margin="5,0,0,0"
+                                     Height="16" Width="16">
+                                <Path Data="M137.81803894043,0L184.643007278442,0 285.305099487305,95.4539799690247 261.901531219482,117.647665023804 184.027824401855,191.499794006348 138.415386199951,191.499794006348 137.81803894043,190.950233459473 221.932691574097,111.137518882751 0,111.137518882751 0,79.7704448699951 221.932691574097,79.7704448699951z"
+                                      Stretch="Uniform"
+                                      Width="8" Height="8"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}">
+                                </Path>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Style="{StaticResource WizardTabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Margin="0,0,5,0">
+                            <Path Data="M37.24749,26.223C36.273693,26.223 35.481998,26.863556 35.481998,27.6474 35.481998,28.433744 36.273693,29.073 37.24749,29.073L57.500103,29.073C58.4753,29.073 59.266994,28.433744 59.266994,27.6474 59.266994,26.863556 58.4753,26.223 57.500103,26.223z M22.067123,22.228001L20.107557,29.49395 19.171373,29.501749 17.620497,26.010784 18.837978,23.752874 16.296419,23.752874 17.568499,25.95738 16.207922,29.52655 15.00996,29.536951 13.381027,22.562717C7.3655553,23.229349,5.3590002,30.58,5.3590002,30.58L29.751997,30.58C29.085308,23.899981,22.067123,22.228001,22.067123,22.228001z M38.202145,17.392C37.225574,17.392 36.433994,18.0326 36.433994,18.8165 36.433994,19.6017 37.225574,20.240999 38.202145,20.240999L58.454147,20.240999C59.42942,20.240999 60.220997,19.6017 60.220997,18.8165 60.220997,18.0326 59.42942,17.392 58.454147,17.392z M17.388794,7.9650002C13.668797,7.9650002 10.652998,10.978045 10.652998,14.69819 10.652998,18.416956 13.668797,21.434 17.388794,21.434 21.105051,21.434 24.121998,18.416956 24.121998,14.69819 24.121998,10.978045 21.105051,7.9650002 17.388794,7.9650002z M0,0L64,0 64,39.734001 0,39.734001z"
+                                  Stretch="Uniform"
+                                  Width="16" Height="16"
+                                  Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}}">
+                            </Path>
+                        </Viewbox>
+                        <TextBlock>BILLING INFO</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid>
+                    <TextBlock FontSize="48"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        BILLING INFORMATION
+                    </TextBlock>
+
+                    <Button HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                            HorizontalContentAlignment="Stretch"
+                            Margin="15" Padding="15"
+                            MinWidth="170"
+                            Click="OnClickToBasket">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Viewbox Margin="0,0,5,0"
+                                     Height="16" Width="16">
+                                <Path Data="M100.661972687318,0L147.487023041322,0 63.3680083013314,79.771056062702 285.305016205384,79.771056062702 285.305016205384,111.138052827839 63.3680083013314,111.138052827839 147.487023041322,190.909117586139 146.885170624329,191.501006013874 101.277153656556,191.501006013874 23.4035479284066,117.648421175007 0,95.4545582599676z"
+                                      Stretch="Uniform"
+                                      Width="8" Height="8"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}">
+                                </Path>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       Text="BASKET"/>
+                        </Grid>
+                    </Button>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                            HorizontalContentAlignment="Stretch"
+                            Margin="15" Padding="15"
+                            MinWidth="170"
+                            Click="OnClickToPaymentDetails">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="PAYMENT DETAILS"/>
+                            <Viewbox Grid.Column="1"
+                                     Margin="5,0,0,0"
+                                     Height="16" Width="16">
+                                <Path Data="M137.81803894043,0L184.643007278442,0 285.305099487305,95.4539799690247 261.901531219482,117.647665023804 184.027824401855,191.499794006348 138.415386199951,191.499794006348 137.81803894043,190.950233459473 221.932691574097,111.137518882751 0,111.137518882751 0,79.7704448699951 221.932691574097,79.7704448699951z"
+                                      Stretch="Uniform"
+                                      Width="8" Height="8"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}">
+                                </Path>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Style="{StaticResource WizardTabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Margin="0,0,5,0">
+                            <Path Data="M12.379616,10.79484L12.458347,10.994912 12.39249,10.825145z M12.191429,10.354113L12.215023,10.407366 12.203358,10.379897z M56.167229,5.7796333C55.898821,6.5323399 55.445114,7.752353 55.479713,7.69638 55.479713,7.6963809 53.844879,12.153608 53.41247,13.306049 54.423593,13.306049 56.908642,13.306049 57.714664,13.306049 57.508257,12.303314 56.512135,7.5154045 56.512135,7.515405z M55.79732,0.36800097L59.800707,0.36800097 63.999996,20.425999 59.189392,20.425999C59.189392,20.425999 58.714684,18.12512 58.552579,17.422095 57.798061,17.422095 52.516748,17.410294 51.918335,17.410294 51.720432,17.954512 50.830413,20.425999 50.830414,20.425999L45.382997,20.425999 53.076562,2.0334615C53.627376,0.72867003,54.555095,0.3680003,55.79732,0.36800097z M0.045532227,0.35900019L8.40625,0.35900019C9.5299072,0.4045959,10.4408,0.7782129,10.7533,2.0531215L12.565434,11.267054 12.566875,11.270715 13.109867,14.050641 18.183386,0.36700056 23.670998,0.36700056 15.512928,20.414 10.027214,20.414 5.3920975,2.8970426 4.9498444,2.6439694C3.4788246,1.8307357,1.8266487,1.1719609,0,0.70539376z M25.770962,0.35000037L30.956999,0.35000037 27.712337,20.422001 22.530001,20.422001z M41.87074,0C43.871366,3.2782555E-07,45.488587,0.43994769,46.511999,0.84760758L45.808891,5.1992958 45.345985,4.9648531C44.379772,4.5507262 43.164357,4.1601606 41.468335,4.1952513 39.433809,4.195251 38.496297,5.0846041 38.494298,5.9192761 38.475397,6.8619197 39.597211,7.4779485 41.401934,8.4075921 44.398673,9.8398631 45.78409,11.574268 45.75949,13.862001 45.71709,18.027561 42.179344,20.723 36.739775,20.723 34.407744,20.6929 32.172616,20.215092 30.961,19.647284L31.685009,15.156519 32.359518,15.472925C34.05674,16.226735 35.160354,16.523539 37.23128,16.523539 38.719,16.523539 40.31792,15.912931 40.336721,14.573111 40.344621,13.692799 39.666212,13.06389 37.646686,12.080875 35.682461,11.117361 33.073728,9.513078 33.106228,6.6198471 33.136828,2.7226997 36.741775,3.2782555E-07 41.87074,0z"
+                                  Stretch="Uniform"
+                                  Width="16" Height="16"
+                                  Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}}">
+                            </Path>
+                        </Viewbox>
+                        <TextBlock>PAYMENT</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid>
+                    <TextBlock FontSize="48"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        PAYMENT DETAILS
+                    </TextBlock>
+
+                    <Button HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                            HorizontalContentAlignment="Stretch"
+                            Margin="15" Padding="15"
+                            MinWidth="170"
+                            Click="OnClickToBillingInformation">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Viewbox Margin="0,0,5,0"
+                                     Height="16" Width="16">
+                                <Path Data="M100.661972687318,0L147.487023041322,0 63.3680083013314,79.771056062702 285.305016205384,79.771056062702 285.305016205384,111.138052827839 63.3680083013314,111.138052827839 147.487023041322,190.909117586139 146.885170624329,191.501006013874 101.277153656556,191.501006013874 23.4035479284066,117.648421175007 0,95.4545582599676z"
+                                      Stretch="Uniform"
+                                      Width="8" Height="8"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}">
+                                </Path>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       Text="BILLING INFORMATION"/>
+                        </Grid>
+                    </Button>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                            HorizontalContentAlignment="Stretch"
+                            Margin="15" Padding="15"
+                            MinWidth="170"
+                            Click="OnClickToBuy">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="BUY"/>
+                            <Viewbox Grid.Column="1"
+                                     Margin="5,0,0,0"
+                                     Height="16" Width="16">
+                                <Path Data="M137.81803894043,0L184.643007278442,0 285.305099487305,95.4539799690247 261.901531219482,117.647665023804 184.027824401855,191.499794006348 138.415386199951,191.499794006348 137.81803894043,190.950233459473 221.932691574097,111.137518882751 0,111.137518882751 0,79.7704448699951 221.932691574097,79.7704448699951z"
+                                      Stretch="Uniform"
+                                      Width="8" Height="8"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}">
+                                </Path>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Style="{StaticResource WizardLastTabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Margin="0,0,5,0">
+                            <Path Data="M9.4910002,33.103001L9.4910002,35.531002 40.387001,35.531002 40.387001,33.103001z M9.4910002,23.172001L9.4910002,25.598999 40.387001,25.598999 40.387001,23.172001z M9.4910002,13.241L9.4910002,15.669 40.387001,15.669 40.387001,13.241z M0,0L49.875999,0 49.875999,63.796902 45.821415,58.2383 41.628731,52.230499 37.570148,58.330799 33.498562,64 33.144367,64 28.949081,58.248798 24.756399,52.241001 20.697817,58.341202 16.634033,64 16.264233,64 12.076752,58.259201 7.8840885,52.251301 3.8254242,58.351601 0,63.677101z"
+                                  Stretch="Uniform"
+                                  Width="16" Height="16"
+                                  Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}}">
+                            </Path>
+                        </Viewbox>
+                        <TextBlock>RECEIPT</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid>
+                    <TextBlock FontSize="48"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        AWESOME, THANK YOU!
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+
+</Window>
