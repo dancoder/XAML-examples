@@ -1,0 +1,24 @@
+﻿<Window x:Class="SlackLoader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:SlackLoader"
+        Title="Slack loading indicator in WPF"
+        Height="280" Width="340">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#00779C">
+            <local:ElasticSlackLoadingIndicator HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+
+        <Border Grid.Row="1">
+            <local:ElasticSlackLoadingIndicator HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+
+    </Grid>
+
+</Window>

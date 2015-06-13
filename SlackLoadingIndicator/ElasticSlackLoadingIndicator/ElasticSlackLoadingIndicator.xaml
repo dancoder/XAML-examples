@@ -1,0 +1,208 @@
+﻿<UserControl x:Class="SlackLoader.ElasticSlackLoadingIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="36" d:DesignWidth="36">
+
+    <UserControl.Resources>
+
+        <Storyboard x:Key="LineAnimationStoryboard"
+                    RepeatBehavior="Forever">
+
+            <!-- Orange line -->
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="X2"
+                             From="20" To="25"
+                             Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="Y2"
+                             From="0" To="28"
+                             Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="X2"
+                             From="25" To="20"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="OrangeLine" Storyboard.TargetProperty="Y2"
+                             From="28" To="0"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- End orange line -->
+
+            <!-- Blue line -->
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="X2"
+                             From="0" To="28"
+                             Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="Y2"
+                             From="10" To="5"
+                             Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="X2"
+                             From="28" To="0"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="BlueLine" Storyboard.TargetProperty="Y2"
+                             From="5" To="10"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- End blue line -->
+
+            <!-- Red line -->
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="X2"
+                             From="30" To="2"
+                             Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="Y2"
+                             From="20" To="25"
+                             Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="X2"
+                             From="2" To="30"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="RedLine" Storyboard.TargetProperty="Y2"
+                             From="25" To="20"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- End red line -->
+
+            <!-- Green line -->
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="X2"
+                             From="10" To="5"
+                             Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="Y2"
+                             From="30" To="2"
+                             Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="X2"
+                             From="5" To="10"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="GreenLine" Storyboard.TargetProperty="Y2"
+                             From="2" To="30"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- End green line -->
+            
+            <!-- Rotation -->
+            <DoubleAnimation Storyboard.TargetName="Rotation" Storyboard.TargetProperty="Angle"
+                             From="-9" To="171"
+                             Duration="0:0:0.8">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut" Amplitude="0.9"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <DoubleAnimation Storyboard.TargetName="Rotation" Storyboard.TargetProperty="Angle"
+                             From="171" To="351"
+                             BeginTime="0:0:0.8"
+                             Duration="0:0:0.8">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut" Amplitude="0.9"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- End rotation -->
+
+        </Storyboard>
+
+    </UserControl.Resources>
+
+    <Canvas Width="30" Height="30"
+            RenderTransformOrigin="0.5,0.5">
+
+        <Canvas.LayoutTransform>
+            <TransformGroup>
+                <RotateTransform x:Name="Rotation"
+                                 CenterX="15" CenterY="15"
+                                 Angle="-9"/>
+                <ScaleTransform ScaleX="1.4" ScaleY="1.4"
+                                CenterX="15" CenterY="15"/>
+            </TransformGroup>
+        </Canvas.LayoutTransform>
+
+        <Line x:Name="OrangeLine"
+              X1="20" Y1="0"
+              X2="20" Y2="0"
+              Stroke="#A0E9A920" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+        <Line x:Name="BlueLine"
+              X1="0" Y1="10"
+              X2="0" Y2="10"
+              Stroke="#A06FCADC" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+        <Line x:Name="RedLine"
+              X1="30" Y1="20"
+              X2="30" Y2="20"
+              Stroke="#A0E11462" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+        <Line x:Name="GreenLine"
+              X1="10" Y1="30"
+              X2="10" Y2="30"
+              Stroke="#A03DB88F" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+    </Canvas>
+
+</UserControl>
